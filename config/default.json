@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://carmen:enlaces1@devenlaces-pfeq9.mongodb.net/<dbname>?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://carmen:enlaces1@devenlaces-pfeq9.mongodb.net/<dbname>?retryWrites=true&w=majority",
+  "jwtSecret": "tokentoken"
 }

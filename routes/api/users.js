@@ -54,9 +54,7 @@ router.post(
             });
 
             const salt = await bcrypt.genSalt(10);
-
             user.password = await bcrypt.hash(password, salt);
-
             await user.save();
 
             const payload = {
@@ -65,15 +63,15 @@ router.post(
                 }
             };
 
-            // jwt.sign(
-            //     payload,
-            //     config.get('jwtSecret'),
-            //     { expiresIn: '5 days' },
-            //     (err, token) => {
-            //         if (err) throw err;
-            //         res.json({ token });
-            //     }
-            // );
+            jwt.sign(
+                payload,
+                config.get('jwtSecret'),
+                { expiresIn: '5 days' },
+                (err, token) => {
+                    if (err) throw err;
+                    res.json({ token });
+                }
+            );
         } catch (err) {
             console.error(err.message);
             res.status(500).send('Server error');
