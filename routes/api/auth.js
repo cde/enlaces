@@ -43,7 +43,7 @@ router.post(
 
             if (!user) {
                 return res
-                    .status(400)    
+                    .status(400)
                     .json({ errors: [{ msg: 'Invalid Credentials' }] });
             }
 
