@@ -108,12 +108,11 @@ router.get('/', async (req, res) => {
     }
 });
 
-// @route    GET api/profile
+// @route    GET api/profile/:user_id
 // @desc     Get profile by userId
 // @access   Public
 router.get(
     '/user/:user_id',
-    // checkObjectId('user_id'),
     async ({ params: { user_id } }, res) => {
         try {
             const profile = await Profile.findOne({
@@ -155,10 +154,8 @@ router.delete('/', auth, async (req, res) => {
 // @route    PUT api/profile/experience
 // @desc     Add profile experience
 // @access   Private
-router.put(
-    '/experience',
-    [
-        auth,
+router.put('/experience',
+    [ auth,
         [
             check('title', 'Title is required').not().isEmpty(),
             check('company', 'Company is required').not().isEmpty(),
@@ -212,28 +209,110 @@ router.put(
 // @route    DELETE api/profile/experience/:experience_id
 // @desc     Delete experience from profile
 // @access   Private
-router.delete('/experience/:experience_id', auth, async (req,res) => {
-    try {
-        const foundProfile = await Profile.findOne({ user: req.user.id});
-        console.log(req.params)
-        // Removing by getting index
-        // const removeIndex = foundProfile.experience
-        //     .map(exp => exp.id)
-        //     .indexOf(req.params.experience_id)
-        // foundProfile.experience.splice(removeIndex,1);
+router.delete('/experience/:experience_id', auth,
+    async (req,res) => {
+        try {
+            const foundProfile = await Profile.findOne({ user: req.user.id});
+            console.log(req.params)
+            // Removing by getting index
+            // const removeIndex = foundProfile.experience
+            //     .map(exp => exp.id)
+            //     .indexOf(req.params.experience_id)
+            // foundProfile.experience.splice(removeIndex,1);
 
-        // Removing by using filter
-        foundProfile.experience = foundProfile.experience.filter((exp) => {
-            exp._id.toString() !== req.params.experience_id
-            }
-        );
+            // Removing by using filter
+            foundProfile.experience = foundProfile.experience.filter((exp) => {
+                exp._id.toString() !== req.params.experience_id
+                }
+            );
 
-        await foundProfile.save();
-        return res.status(200).json(foundProfile);
-    }catch (e) {
-        console.error(e.message)
-        res.status(500).send('Sever Error');
+            await foundProfile.save();
+            return res.status(200).json(foundProfile);
+        } catch (e) {
+            console.error(e.message)
+            res.status(500).send('Sever Error');
+        }
     }
-});
+);
+
+// @route    PUT api/profile/education
+// @desc     Add profile education
+// @access   Private
+router.put('/education',
+    [ auth,
+        [
+            check('school', 'School is required').not().isEmpty(),
+            check('degree', 'Degree is required').not().isEmpty()
+        ]
+    ],
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const {
+            school,
+            degree,
+            fieldOfStudy,
+            from,
+            to,
+            current,
+            description
+        } = req.body;
+
+        const newEducation = {
+            school,
+            degree,
+            fieldOfStudy,
+            from,
+            to,
+            current,
+            description
+        };
+
+        try {
+            const profile = await Profile.findOne({ user: req.user.id });
+
+            profile.education.unshift(newEducation);
+
+            await profile.save();
+
+            res.json(profile);
+        } catch (e) {
+            console.error(e.message);
+            res.status(500).send('Server Error');
+        }
+    }
+);
+
+// @route    DELETE api/profile/education/:education_id
+// @desc     Delete education from profile
+// @access   Private
+router.delete('/education/:education_id', auth,
+    async (req,res) => {
+        try {
+            const foundProfile = await Profile.findOne({ user: req.user.id});
+            console.log(req.params)
+            // Removing by getting index
+            // const removeIndex = foundProfile.education
+            //     .map(exp => exp.id)
+            //     .indexOf(req.params.education_id)
+            // foundProfile.education.splice(removeIndex,1);
+
+            // Removing by using filter
+            foundProfile.education = foundProfile.education.filter((exp) => {
+                    exp._id.toString() !== req.params.education_id
+                }
+            );
+
+            await foundProfile.save();
+            return res.status(200).json(foundProfile);
+        } catch (e) {
+            console.error(e.message)
+            res.status(500).send('Sever Error');
+        }
+    }
+);
 
 module.exports = router;

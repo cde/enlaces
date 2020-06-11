@@ -3,7 +3,6 @@ const config = require('config');
 
 // you could use password instead of this, if you want to integrate with FB, likedIn
 module.exports = function(req,res,next) {
-
     const token = req.header('x-auth-token');
 
     if(!token) {
