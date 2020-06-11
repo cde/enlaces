@@ -1,4 +1,5 @@
 {
   "mongoURI": "mongodb+srv://carmen:enlaces1@devenlaces-pfeq9.mongodb.net/<dbname>?retryWrites=true&w=majority",
-  "jwtSecret": "tokentoken"
+  "jwtSecret": "tokentoken",
+  "githubToken": "0d43a5c891b1068390876b761413f4a6ffdcd2a8"
 }
