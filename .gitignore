@@ -1,2 +1,5 @@
 node_modules/
 .idea/
+client/.DS_Store
+.DS_Store
+.idea/misc.xml
