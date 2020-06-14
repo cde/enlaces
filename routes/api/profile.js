@@ -51,7 +51,7 @@ router.post(
             bio,
             skills,
             status,
-            githubusername,
+            github_username,
             youtube,
             twitter,
             instagram,
@@ -69,7 +69,7 @@ router.post(
                 ? skills
                 : skills.split(',').map((skill) => ' ' + skill.trim()),
             status,
-            githubusername
+            github_username
         };
 
         // Build social object and add to profileFields
@@ -255,7 +255,7 @@ router.put('/education',
         const {
             school,
             degree,
-            fieldOfStudy,
+            field_of_study,
             from,
             to,
             current,
@@ -265,7 +265,7 @@ router.put('/education',
         const newEducation = {
             school,
             degree,
-            fieldOfStudy,
+            field_of_study,
             from,
             to,
             current,

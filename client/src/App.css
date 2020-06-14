@@ -42,6 +42,7 @@ img {
   padding: 0 2rem;
   margin-top: 6rem;
   margin-bottom: 3rem;
+  flex-direction: row
 }
 
 /* Text Styles*/
@@ -574,8 +575,20 @@ button {
   .post button {
     padding: 0.3rem 0.4rem;
   }
+
+  .wrapper {
+    margin: 0 auto;
+  }
 }
 
 .fa-user {
   color: var(--primary-color);
+}
+
+.wrapper {
+  /*display: flex;*/
+  /*flex-flow: column;*/
+  margin: 0 auto;
+  max-width: 330px;
+  width: 100%;
 }

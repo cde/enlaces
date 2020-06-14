@@ -2,7 +2,7 @@ import React, {Fragment, useState} from 'react';
 import FormGroupField from "../Form/FormGroupField";
 import {Link} from "react-router-dom";
 
-const Signin = () => {
+const SignIn = () => {
     const [data, setData] = useState({
         email: '',
         password: '',
@@ -50,4 +50,4 @@ const Signin = () => {
     )
 }
 
-export default Signin;
+export default SignIn;
