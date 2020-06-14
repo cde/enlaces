@@ -1,5 +1,12 @@
 import axios from 'axios';
-import { SIGNUP_SUCCESS, SIGNUP_FAIL, AUTH_FAIL, USER_LOADED } from "./actionTypes";
+import {
+    SIGNUP_SUCCESS,
+    SIGNUP_FAIL,
+    AUTH_FAIL,
+    USER_LOADED,
+    SIGNIN_SUCCESS,
+    SIGNIN_FAIL
+} from "./actionTypes";
 import { setAlert } from "./alert";
 import setAuthToken from '../../utils/setAuthToken';
 
@@ -34,7 +41,8 @@ export const signUp = ({first_name, last_name, email, password}) => async dispat
         dispatch({
             type: SIGNUP_SUCCESS,
             payload: res.data
-        })
+        });
+        dispatch(loadUser());
 
     } catch(e) {
         console.error(e.response.data.errors);
@@ -45,3 +53,29 @@ export const signUp = ({first_name, last_name, email, password}) => async dispat
         dispatch({type: SIGNUP_FAIL});
     }
 };
+
+export const signIn = (email, password ) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    const body = JSON.stringify({ email,password });
+    console.log(body);
+    try {
+        const res = await axios.post('/api/auth', body,config);
+        console.log(res);
+        dispatch({
+            type: SIGNIN_SUCCESS,
+            payload: res.data
+        })
+        dispatch(loadUser());
+    } catch(e) {
+        console.error(e.response.data.errors);
+        const errors = e.response.data.errors;
+        if(errors) {
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+        }
+        dispatch({type: SIGNIN_FAIL});
+    }
+}

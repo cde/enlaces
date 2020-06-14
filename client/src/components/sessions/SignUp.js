@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -25,15 +25,15 @@ const SignUp = (props) => {
     const onSubmit = async e => {
         e.preventDefault();
         if(password !== password_confirmation){
-            console.log("Password don't match");
             props.onSetAlert('Password do not match', 'danger');
         }else{
-            console.log('reducer will be here');
             const newUser = { first_name, last_name, email, password}
             props.onSignUp(newUser);
         }
     }
-
+    if(props.isAuthenticated){
+        return <Redirect to='/dashboard' />
+    }
     return (
         <div className='wrapper'>
             <p className="lead"><i className="fas fa-user"></i> Create Your Account</p>
@@ -92,8 +92,13 @@ const SignUp = (props) => {
 
 SignUp.propTypes = {
     onSetAlert: PropTypes.func.isRequired,
-    onSignUp: PropTypes.func.isRequired
+    onSignUp: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool
 };
+
+const mapStateToProps = (state) => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -102,4 +107,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(null, mapDispatchToProps )(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

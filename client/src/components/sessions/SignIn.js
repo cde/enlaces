@@ -1,8 +1,12 @@
-import React, {Fragment, useState} from 'react';
+import React, { useState } from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import FormGroupField from "../Form/FormGroupField";
-import {Link} from "react-router-dom";
+import { signIn } from "../../store/actions/auth";
+import PropTypes from "prop-types";
 
-const SignIn = () => {
+const SignIn = ( props) => {
+    const { signIn, isAuthenticated } = props;
     const [data, setData] = useState({
         email: '',
         password: '',
@@ -16,10 +20,15 @@ const SignIn = () => {
     const onSubmit = async e => {
         e.preventDefault();
         console.log('reducer will be here');
+        signIn(email, password);
+    }
+
+    if(isAuthenticated) {
+        return <Redirect to='/dashboard' />
     }
 
     return (
-        <Fragment>
+        <div className='wrapper'>
             <p className="lead"><i className="fas fa-user"></i> Log In </p>
             <form className="form" onSubmit={e=> onSubmit(e)}>
                 <FormGroupField
@@ -46,8 +55,16 @@ const SignIn = () => {
             <p className="my-1">
                 Don't you have an account? <Link to="/signup">Sign Up</Link>
             </p>
-        </Fragment>
+        </div>
     )
 }
 
-export default SignIn;
+SignIn.propsTypes = {
+    signIn: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool
+}
+const mapStateToProps = (state) => ({
+    isAuthenticated: state.auth.isAuthenticated
+
+});
+export default connect(mapStateToProps, { signIn } )(SignIn);
