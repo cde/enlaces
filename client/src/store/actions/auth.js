@@ -5,7 +5,8 @@ import {
     AUTH_FAIL,
     USER_LOADED,
     SIGNIN_SUCCESS,
-    SIGNIN_FAIL
+    SIGNIN_FAIL,
+    SIGNOUT
 } from "./actionTypes";
 import { setAlert } from "./alert";
 import setAuthToken from '../../utils/setAuthToken';
@@ -78,4 +79,10 @@ export const signIn = (email, password ) => async dispatch => {
         }
         dispatch({type: SIGNIN_FAIL});
     }
+}
+
+export const  signOut = () => async  dispatch => {
+    dispatch({
+        type: SIGNOUT
+    })
 }

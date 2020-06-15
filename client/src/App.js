@@ -3,8 +3,9 @@ import {  BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Navbar from "./components/Layout/Navbar";
 import Landing from "./components/Layout/Landing";
-import Register from "./components/sessions/SignUp";
-import SignIn from "./components/sessions/SignIn";
+import SignUp from "./components/Sessions/SignUp";
+import SignIn from "./components/Sessions/SignIn";
+import Dashboard from "./components/Dashboard/Dashboard";
 import Alert from "./components/Layout/Alert";
 import setAuthToken from "./utils/setAuthToken";
 import { loadUser} from "./store/actions/auth";
@@ -31,8 +32,9 @@ const App = () => {
                     <section className='container'>
                         <Alert />
                         <Switch>
-                            <Route exact path='/signup' component={Register} />
-                            <Route exact path='/login' component={SignIn} />
+                            <Route exact path='/signup' component={SignUp} />
+                            <Route exact path='/signin' component={SignIn} />
+                            <Route exact path='/dashboard' component={Dashboard} />
                         </Switch>
                     </section>
                 </Fragment>
