@@ -6,7 +6,8 @@ import {
     USER_LOADED,
     SIGNIN_SUCCESS,
     SIGNIN_FAIL,
-    SIGNOUT
+    SIGNOUT,
+    CLEAR_PROFILE
 } from "./actionTypes";
 import { setAlert } from "./alert";
 import setAuthToken from '../../utils/setAuthToken';
@@ -79,7 +80,6 @@ export const signIn = (email, password ) => async dispatch => {
 }
 
 export const  signOut = () => async  dispatch => {
-    dispatch({
-        type: SIGNOUT
-    })
+    dispatch({type: SIGNOUT})
+    dispatch({type: CLEAR_PROFILE})
 }
