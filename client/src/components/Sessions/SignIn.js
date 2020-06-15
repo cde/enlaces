@@ -19,7 +19,6 @@ const SignIn = ( props) => {
 
     const onSubmit = async e => {
         e.preventDefault();
-        console.log('reducer will be here');
         signIn(email, password);
     }
 

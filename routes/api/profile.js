@@ -214,7 +214,6 @@ router.delete('/experience/:experience_id', auth,
     async (req,res) => {
         try {
             const foundProfile = await Profile.findOne({ user: req.user.id});
-            console.log(req.params)
             // Removing by getting index
             // const removeIndex = foundProfile.experience
             //     .map(exp => exp.id)
@@ -294,7 +293,6 @@ router.delete('/education/:education_id', auth,
     async (req,res) => {
         try {
             const foundProfile = await Profile.findOne({ user: req.user.id});
-            console.log(req.params)
             // Removing by getting index
             // const removeIndex = foundProfile.education
             //     .map(exp => exp.id)

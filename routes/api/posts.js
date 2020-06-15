@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
-const Profile = require('../../models/Profile');
+// const Profile = require('../../models/Profile');
 const Post = require('../../models/Post');
 const User = require('../../models/User');
 
@@ -125,8 +125,6 @@ router.put('/like/:id', auth, async (req, res) => {
 router.put('/unlike/:id', auth, async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
-
-        console.log(post);
 
         // Checking by using filter
         // if (post.likes.filter(like => like.user.toString() === req.user.id).length === 0) {

@@ -38,7 +38,6 @@ export const signUp = ({first_name, last_name, email, password}) => async dispat
     const body = JSON.stringify({first_name, last_name, email,password});
     try {
         const res = await axios.post('/api/users', body,config);
-        console.log(res);
         dispatch({
             type: SIGNUP_SUCCESS,
             payload: res.data
@@ -62,10 +61,8 @@ export const signIn = (email, password ) => async dispatch => {
         }
     }
     const body = JSON.stringify({ email,password });
-    console.log(body);
     try {
         const res = await axios.post('/api/auth', body,config);
-        console.log(res);
         dispatch({
             type: SIGNIN_SUCCESS,
             payload: res.data
