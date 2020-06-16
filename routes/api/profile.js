@@ -243,7 +243,7 @@ router.put('/education',
     [ auth,
         [
             check('school', 'School is required').not().isEmpty(),
-            check('degree', 'Degree is required').not().isEmpty()
+            check('degree', 'Degree or Certificate is required').not().isEmpty()
         ]
     ],
     async (req, res) => {

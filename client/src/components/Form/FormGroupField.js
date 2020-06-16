@@ -1,7 +1,7 @@
 import React from 'react';
 
 const FormGroupField = (props) => {
-    const { placeholder, name, value, required, minLength } = props
+    const { className, placeholder, name, value, required, minLength } = props
     let type = props.type ? props.type  : 'text';
     let subText = null;
     if(props.subText){
@@ -15,7 +15,8 @@ const FormGroupField = (props) => {
         icons = ( <i className={props.iconClassName}></i>)
     }
     return (
-        <div className="form-group">
+        <div className={`form-group ${className}`}>
+            {/*<label>From</label>*/}
             {icons}
             <input
                 type={type}
@@ -25,7 +26,8 @@ const FormGroupField = (props) => {
                 onChange={ props.onChange }
                 required = {required}
                 minLength={minLength}
-            />
+            /> { " " }
+            {  props.text }
             { subText }
         </div>
     )

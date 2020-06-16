@@ -8,6 +8,8 @@ import SignIn from "./components/Sessions/SignIn";
 import Alert from "./components/Layout/Alert";
 import Dashboard from "./components/Dashboard/Dashboard";
 import CreateProfile from "./components/Profile/CreateProfile";
+import EditProfile from "./components/Profile/EditProfile";
+import UpdateExperience from "./components/Profile/UpdateExperience";
 
 import setAuthToken from "./utils/setAuthToken";
 import { loadUser} from "./store/actions/auth";
@@ -17,9 +19,6 @@ import PrivateRoute from "./components/Routing/PrivateRoute";
 import { Provider } from 'react-redux';
 import store from '../src/store/store';
 //=============
-
-
-
 
 if(localStorage.token){
     setAuthToken(localStorage.token);
@@ -42,6 +41,8 @@ const App = () => {
                             <Route exact path='/signin' component={SignIn} />
                             <PrivateRoute exact path='/dashboard' component={Dashboard} />
                             <PrivateRoute exact path='/create-profile' component={CreateProfile} />
+                            <PrivateRoute exact path='/edit-profile' component={EditProfile} />
+                            <PrivateRoute exact path='/update-experience' component={UpdateExperience} />
                         </Switch>
                     </section>
                 </Fragment>
