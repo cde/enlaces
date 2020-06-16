@@ -35,7 +35,7 @@ router.post(
     [
         auth,
         [
-            check('status', 'Status is required').not().isEmpty(),
+            check('current_position', 'Position is required').not().isEmpty(),
             check('skills', 'Skills is required').not().isEmpty()
         ]
     ],
@@ -45,12 +45,13 @@ router.post(
             return res.status(400).json({ errors: errors.array() });
         }
         const {
+            skills,
+            current_position,
+            headline,
             company,
             location,
             website,
             bio,
-            skills,
-            status,
             github_username,
             youtube,
             twitter,
@@ -68,7 +69,7 @@ router.post(
             skills: Array.isArray(skills)
                 ? skills
                 : skills.split(',').map((skill) => ' ' + skill.trim()),
-            status,
+            current_position,
             github_username
         };
 

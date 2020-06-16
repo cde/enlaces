@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { GET_PROFILE, PROFILE_ERROR } from "./actionTypes";
+import {setAlert} from "./alert";
 // import { setAlert } from "./alert";
 
 export const getCurrentProfile = () => async dispatch => {
@@ -17,3 +18,33 @@ export const getCurrentProfile = () => async dispatch => {
         })
     }
 };
+
+export const createProfile = (profileData, history, create = true) => async dispatch => {
+    try{
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        const res = await axios.post('/api/profile', profileData, config)
+
+        dispatch({
+            type: GET_PROFILE,
+            payload: res.data
+        })
+
+        const message = create ? 'Profile created' : 'Profile updated';
+        dispatch( setAlert(message, 'success'));
+
+        if(create){
+            history.push('/dashboard');
+        }
+
+    }catch(e){
+        console.error(e.response.data.errors);
+        const errors = e.response.data.errors;
+        if(errors) {
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+        }
+    }
+}

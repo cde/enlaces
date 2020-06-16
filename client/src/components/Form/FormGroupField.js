@@ -10,8 +10,13 @@ const FormGroupField = (props) => {
                 { props.subText }
         </small>)
     }
+    let icons = null;
+    if(props.iconClassName){
+        icons = ( <i className={props.iconClassName}></i>)
+    }
     return (
         <div className="form-group">
+            {icons}
             <input
                 type={type}
                 placeholder={placeholder}

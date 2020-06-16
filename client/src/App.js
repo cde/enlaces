@@ -5,8 +5,10 @@ import Navbar from "./components/Layout/Navbar";
 import Landing from "./components/Layout/Landing";
 import SignUp from "./components/Sessions/SignUp";
 import SignIn from "./components/Sessions/SignIn";
-import Dashboard from "./components/Dashboard/Dashboard";
 import Alert from "./components/Layout/Alert";
+import Dashboard from "./components/Dashboard/Dashboard";
+import CreateProfile from "./components/Profile/CreateProfile";
+
 import setAuthToken from "./utils/setAuthToken";
 import { loadUser} from "./store/actions/auth";
 import PrivateRoute from "./components/Routing/PrivateRoute";
@@ -14,6 +16,9 @@ import PrivateRoute from "./components/Routing/PrivateRoute";
 //Redux
 import { Provider } from 'react-redux';
 import store from '../src/store/store';
+//=============
+
+
 
 
 if(localStorage.token){
@@ -36,6 +41,7 @@ const App = () => {
                             <Route exact path='/signup' component={SignUp} />
                             <Route exact path='/signin' component={SignIn} />
                             <PrivateRoute exact path='/dashboard' component={Dashboard} />
+                            <PrivateRoute exact path='/create-profile' component={CreateProfile} />
                         </Switch>
                     </section>
                 </Fragment>
