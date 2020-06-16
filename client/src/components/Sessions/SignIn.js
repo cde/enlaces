@@ -49,7 +49,7 @@ const SignIn = ( props) => {
 
                     subText = 'Minimum length 6 characters'
                 />
-                <input type="submit" className="btn btn-primary" value="Register"/>
+                <input type="submit" className="btn btn-primary" value="Sign In"/>
             </form>
             <p className="my-1">
                 Don't you have an account? <Link to="/signup">Sign Up</Link>

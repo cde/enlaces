@@ -4,6 +4,7 @@ const axios = require('axios');
 const router = express.Router();
 const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
+const normalize = require('normalize-url');
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 
@@ -62,25 +63,26 @@ router.post(
 
         const profileFields = {
             user: req.user.id,
+            current_position,
+            skills: Array.isArray(skills)
+                ? skills
+                : skills.split(',').map((skill) => ' ' + skill.trim()),
+            headline,
             company,
             location,
             website: website && website !== '' ? normalize(website, { forceHttps: true }) : '',
             bio,
-            skills: Array.isArray(skills)
-                ? skills
-                : skills.split(',').map((skill) => ' ' + skill.trim()),
-            current_position,
             github_username
         };
 
         // Build social object and add to profileFields
-        const socialfields = { youtube, twitter, instagram, linkedin, facebook };
+        const socialFields = { youtube, twitter, instagram, linkedin, facebook };
 
-        for (const [key, value] of Object.entries(socialfields)) {
+        for (const [key, value] of Object.entries(socialFields)) {
             if (value && value.length > 0)
-                socialfields[key] = normalize(value, { forceHttps: true });
+                socialFields[key] = normalize(value, { forceHttps: true });
         }
-        profileFields.social = socialfields;
+        profileFields.social = socialFields;
 
         try {
             // Using upsert option (creates new doc if no match is found):

@@ -7,9 +7,10 @@ import SignUp from "./components/Sessions/SignUp";
 import SignIn from "./components/Sessions/SignIn";
 import Alert from "./components/Layout/Alert";
 import Dashboard from "./components/Dashboard/Dashboard";
-import CreateProfile from "./components/Profile/CreateProfile";
-import EditProfile from "./components/Profile/EditProfile";
+import CreateProfile from "./components/Profile/CreateOrUpdateProfile";
+import EditProfile from "./components/Profile/CreateOrUpdateProfile";
 import UpdateExperience from "./components/Profile/UpdateExperience";
+import UpdateEducation from "./components/Profile/UpdateEducation";
 
 import setAuthToken from "./utils/setAuthToken";
 import { loadUser} from "./store/actions/auth";
@@ -43,6 +44,7 @@ const App = () => {
                             <PrivateRoute exact path='/create-profile' component={CreateProfile} />
                             <PrivateRoute exact path='/edit-profile' component={EditProfile} />
                             <PrivateRoute exact path='/update-experience' component={UpdateExperience} />
+                            <PrivateRoute exact path='/update-education' component={UpdateEducation} />
                         </Switch>
                     </section>
                 </Fragment>

@@ -11,7 +11,7 @@ const DashboardLinks = () => {
             <Link to="/update-experience" className="btn btn-light">
                 <i className="fab fa-black-tie text-primary"></i> + Experience
             </Link>
-            <Link to="/add-education" className="btn btn-light">
+            <Link to="/update-education" className="btn btn-light">
                 <i className="fas fa-graduation-cap text-primary"></i> + Education
             </Link>
         </div>

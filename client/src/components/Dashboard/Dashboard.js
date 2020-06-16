@@ -11,10 +11,10 @@ const Dashboard = ( { getCurrentProfile, auth: { user }, profile: { profile, loa
 
     useEffect(() => {
         getCurrentProfile();
-    },[]);
+    },[getCurrentProfile]);
 
     let content = ''
-    if (loading && profile === null) {
+    if (profile === null) {
         content = (
             <div>
                 <p>You have not yet setup a profile, please add some info</p>

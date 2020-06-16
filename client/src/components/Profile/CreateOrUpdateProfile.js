@@ -1,50 +1,34 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { createOrUpdateProfile, getCurrentProfile } from '../../store/actions/profile';
 
 import FormGroupField from "../Form/FormGroupField";
 
-const EditProfile = ({ profile: { profile, loading },
-                         createOrUpdateProfile, getCurrentProfile, history } ) => {
+const initialState = {
+    current_position: '',
+    skills: '',
+    headline: '',
+    company: '',
+    location: '',
+    website: '',
+    bio: '',
+    github_username: '',
+    youtube: '',
+    twitter: '',
+    instagram: '',
+    linkedin: '',
+    facebook: ''
+}
 
-    const [data, setData] = useState({
-        current_position: '',
-        skills: '',
-        headline: '',
-        company: '',
-        location: '',
-        website: '',
-        bio: '',
-        github_username: '',
-        youtube: '',
-        twitter: '',
-        instagram: '',
-        linkedin: '',
-        facebook: ''
-    });
+const CreateOrUpdateProfile = ({ profile: { profile, loading },
+        createOrUpdateProfile,
+        getCurrentProfile,
+        history } ) => {
 
-    const [displaySocialInputs, setSocialInputs] = useState(false);
-    useEffect(() => {
-        getCurrentProfile();
-        setData({
-            current_position: loading || !profile.current_position ? '' : profile.current_position,
-            skills: loading || !profile.skills ? '' : profile.skills,
-            headline: loading || !profile.headline ? '' : profile.headline,
-            company: loading || !profile.company ? '' : profile.company,
-            website: loading || !profile.website ? '' : profile.website,
-            location: loading || !profile.location ? '' : profile.location,
-            github_username: loading || !profile.github_username ? '' : profile.github_username,
-            bio: loading || !profile.bio ? '' : profile.bio,
-            twitter: loading || !profile.social ? '' :profile.social.twitter,
-            facebook: loading || !profile.social ? '' :profile.social.facebook,
-            linkedin: loading || !profile.social ? '' :profile.social.linkedin,
-            youtube: loading || !profile.social ? '' :profile.social.youtube,
-            instagram: loading || !profile.social ? '' :profile.social.instagram
-        });
-    },[loading]);
-
+    const [profileData, setProfileData] = useState(initialState);
+    const [displaySocialInputs, setSocialInputs] = useState();
     const {
         current_position,
         skills,
@@ -59,19 +43,35 @@ const EditProfile = ({ profile: { profile, loading },
         instagram,
         linkedin,
         facebook
-    } = data
+    } = profileData
+
+
+    useEffect(() => {
+        if (!profile) getCurrentProfile();
+        if (!loading && profile) {
+            const profileData = { ...initialState };
+            for (const key in profile) {
+                if (key in profileData) profileData[key] = profile[key];
+            }
+            for (const key in profile.social) {
+                if (key in profileData) profileData[key] = profile.social[key];
+            }
+            if (Array.isArray(profileData.skills))
+                profileData.skills = profileData.skills.join(', ');
+            setProfileData(profileData);
+        }
+    }, [loading, getCurrentProfile, profile]);
 
     const handleOnChange = (e) => {
-        setData({...data, [e.target.name]: e.target.value})
+        setProfileData({...profileData, [e.target.name]: e.target.value})
     }
     const onSubmit =(e) => {
-        console.log('Submit');
         e.preventDefault();
-        createOrUpdateProfile(data, history, false);
+        createOrUpdateProfile(profileData, history, profile ? true : false);
     }
     return(
         <div >
-            <p className="lead"><i className="fas fa-user"></i> Edit Your Profile</p>
+            <p className="lead"><i className="fas fa-user"></i> { profile ? 'Update' : 'Create'} Your Profile</p>
             <small>* = required field</small>
             <form className="form" onSubmit={e=> onSubmit(e)}>
                 <FormGroupField
@@ -116,8 +116,6 @@ const EditProfile = ({ profile: { profile, loading },
                     onChange={ e=> handleOnChange(e) }
                     subText='City & state suggested (eg. San Francisco, CA)'
                 />
-
-
                 <FormGroupField
                     placeholder = 'Github Username'
                     name='github_username'
@@ -130,6 +128,8 @@ const EditProfile = ({ profile: { profile, loading },
                     <textarea
                         placeholder="A short bio of yourself"
                         name="bio"
+                        cols="30"
+                        rows="5"
                         value={bio}
                         onChange={ e=> handleOnChange(e) }>
                     </textarea>
@@ -143,53 +143,52 @@ const EditProfile = ({ profile: { profile, loading },
                     <span>Optional</span>
                 </div>
                 { displaySocialInputs &&
-                <Fragment>
-                    <FormGroupField
-                        className='social-input'
-                        placeholder = 'Twitter URL'
-                        name='twitter'
-                        value={twitter}
-                        onChange={ e=> handleOnChange(e) }
-                        iconClassName = 'fab fa-twitter fa-2x'
-                    />
+                    <Fragment>
+                        <FormGroupField
+                            className='social-input'
+                            placeholder = 'Twitter URL'
+                            name='twitter'
+                            value={twitter}
+                            onChange={ e=> handleOnChange(e) }
+                            iconClassName = 'fab fa-twitter fa-2x'
+                        />
 
-                    <FormGroupField
-                        className='social-input'
-                        placeholder = 'Facebook URL'
-                        name='facebook'
-                        value={facebook}
-                        onChange={ e=> handleOnChange(e) }
-                        iconClassName = 'fab fa-facebook fa-2x'
-                    />
+                        <FormGroupField
+                            className='social-input'
+                            placeholder = 'Facebook URL'
+                            name='facebook'
+                            value={facebook}
+                            onChange={ e=> handleOnChange(e) }
+                            iconClassName = 'fab fa-facebook fa-2x'
+                        />
 
-                    <FormGroupField
-                        className='social-input'
-                        placeholder = 'YouTube URL'
-                        name='youtube'
-                        value={youtube}
-                        onChange={ e=> handleOnChange(e) }
-                        iconClassName = 'fab fa-youtube fa-2x'
-                    />
+                        <FormGroupField
+                            className='social-input'
+                            placeholder = 'YouTube URL'
+                            name='youtube'
+                            value={youtube}
+                            onChange={ e=> handleOnChange(e) }
+                            iconClassName = 'fab fa-youtube fa-2x'
+                        />
 
-                    <FormGroupField
-                        className='social-input'
-                        placeholder = 'Linkedin URL'
-                        name='linkedin'
-                        value={linkedin}
-                        onChange={ e=> handleOnChange(e) }
-                        iconClassName = 'fab fa-linkedin fa-2x'
-                    />
+                        <FormGroupField
+                            className='social-input'
+                            placeholder = 'Linkedin URL'
+                            name='linkedin'
+                            value={linkedin}
+                            onChange={ e=> handleOnChange(e) }
+                            iconClassName = 'fab fa-linkedin fa-2x'
+                        />
 
-                    <FormGroupField
-                        className='social-input'
-                        placeholder = 'Instagram URL'
-                        name='instagram'
-                        value={instagram}
-                        onChange={ e=> handleOnChange(e) }
-                        iconClassName = 'fab fa-instagram fa-2x'
-                    />
-
-                </Fragment>
+                        <FormGroupField
+                            className='social-input'
+                            placeholder = 'Instagram URL'
+                            name='instagram'
+                            value={instagram}
+                            onChange={ e=> handleOnChange(e) }
+                            iconClassName = 'fab fa-instagram fa-2x'
+                        />
+                    </Fragment>
                 }
                 <input type="submit" className="btn btn-primary my-1"/>
                 <Link className="btn btn-light my-1" to="/dashboard">Go Back</Link>
@@ -198,7 +197,7 @@ const EditProfile = ({ profile: { profile, loading },
     )
 }
 
-EditProfile.propTyes = {
+CreateOrUpdateProfile.propTyes = {
     createOrUpdateProfile: PropTypes.func.isRequired,
     getCurrentProfile: PropTypes.func.isRequired,
     profile: PropTypes.object.isRequired
@@ -206,6 +205,4 @@ EditProfile.propTyes = {
 const mapStateToProps = state => ({
     profile: state.profile
 })
-export default connect(mapStateToProps,
-    { createOrUpdateProfile, getCurrentProfile }
-    )(withRouter(EditProfile));
+export default connect(mapStateToProps, { createOrUpdateProfile, getCurrentProfile })(CreateOrUpdateProfile);
