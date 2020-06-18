@@ -6,6 +6,7 @@ const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
 const normalize = require('normalize-url');
 const Profile = require('../../models/Profile');
+const Post = require('../../models/Post');
 const User = require('../../models/User');
 
 // @route    GET api/profile/me
@@ -142,9 +143,11 @@ router.get(
 router.delete('/', auth, async (req, res) => {
     try {
         // Remove user posts
-        // await Post.deleteMany({ user: req.user.id });
+        await Post.deleteMany({ user: req.user.id });
+
         // Remove profile
         await Profile.findOneAndRemove({ user: req.user.id });
+
         // Remove user
         await User.findOneAndRemove({ _id: req.user.id });
 
@@ -224,9 +227,8 @@ router.delete('/experience/:experience_id', auth,
             // foundProfile.experience.splice(removeIndex,1);
 
             // Removing by using filter
-            foundProfile.experience = foundProfile.experience.filter((exp) => {
-                exp._id.toString() !== req.params.experience_id
-                }
+            foundProfile.experience = foundProfile.experience.filter(
+                (exp) => exp._id.toString() !== req.params.experience_id
             );
 
             await foundProfile.save();
@@ -303,9 +305,8 @@ router.delete('/education/:education_id', auth,
             // foundProfile.education.splice(removeIndex,1);
 
             // Removing by using filter
-            foundProfile.education = foundProfile.education.filter((exp) => {
-                    exp._id.toString() !== req.params.education_id
-                }
+            foundProfile.education = foundProfile.education.filter(
+                (exp) => exp._id.toString() !== req.params.education_id
             );
 
             await foundProfile.save();

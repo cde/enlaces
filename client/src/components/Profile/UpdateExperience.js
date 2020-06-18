@@ -8,13 +8,13 @@ import { updateExperience }  from '../../store/actions/profile';
 
 const UpdateExperience = ({updateExperience, history}) => {
     const [experienceData, setExperienceData] = useState({
-        title: null,
-        company: null,
-        location: null,
-        from: null,
-        to: null,
+        title: '',
+        company: '',
+        location: '',
+        from: '',
+        to: '',
         current: false,
-        description: null
+        description: ''
     });
 
     const [toDateDisabled, toggleDisabled] = useState(false);

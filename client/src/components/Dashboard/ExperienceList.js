@@ -1,20 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Moment from "react-moment";
 import moment from 'moment';
+import { deleteExperienceOrEducation } from '../../store/actions/profile';
 
-const ExperienceList = ({ experience }) => {
+const ExperienceList = ({ experience, deleteExperienceOrEducation  }) => {
     console.log(experience)
     const experienceRows = experience.map(exp => (
         <tr key={exp._id} >
             <td>{exp.company}</td>
             <td className='hide-sm'>{exp.title}</td>
-            {/*<td>*/}
-            {/*    <Moment format='YYYY/MM/DD'>{ moment.utc(exp.from) } </Moment> - { ' ' }*/}
-            {/*        { exp.to === null ? ('Now') : (*/}
-            {/*            <Moment format='YYYY/MM/DD'> { moment.utc(exp.to) }</Moment>*/}
-            {/*        )}*/}
-            {/*</td>*/}
             <td>
                 <Moment format="YYYY/MM/DD">{moment.utc(exp.from)}</Moment> -{' '}
                 {exp.to === null ? (' Now') : (
@@ -22,7 +19,13 @@ const ExperienceList = ({ experience }) => {
                 )}
             </td>
             <td>
-                <button className='btn btn-danger'>Delete</button>
+
+                <Link
+                    className='btn btn-danger'
+                    onClick={()=>deleteExperienceOrEducation(exp._id) }
+                >
+                    <i className="far fa-trash-alt"></i>
+                </Link>
             </td>
         </tr>
 
@@ -43,10 +46,11 @@ const ExperienceList = ({ experience }) => {
                 </tbody>
             </table>
         </div>
-    )
+    );
 }
 ExperienceList.propTypes = {
-    experience: PropTypes.array.isRequired
+    experience: PropTypes.array.isRequired,
+    deleteExperience: PropTypes.func.isRequired
 }
 
-export default ExperienceList;
+export default connect(null, { deleteExperienceOrEducation } )(ExperienceList);

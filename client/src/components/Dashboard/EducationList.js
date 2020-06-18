@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Moment from "react-moment";
 import moment from 'moment';
+import { deleteExperienceOrEducation } from '../../store/actions/profile';
+import {Link} from "react-router-dom";
 
-const EducationList = ({ education }) => {
+const EducationList = ({ education, deleteExperienceOrEducation }) => {
     const educationRows = education.map(edu => (
         <tr key={edu._id} >
             <td>{edu.school}</td>
@@ -17,7 +20,12 @@ const EducationList = ({ education }) => {
                 )}
             </td>
             <td>
-                <button className='btn btn-danger'>Delete</button>
+                <Link
+                    className='btn btn-danger'
+                    onClick={()=>deleteExperienceOrEducation(edu._id) }
+                >
+                    <i className="far fa-trash-alt"></i>
+                </Link>
             </td>
         </tr>
 
@@ -41,7 +49,8 @@ const EducationList = ({ education }) => {
     )
 }
 EducationList.propTypes = {
-    education: PropTypes.array.isRequired
+    education: PropTypes.array.isRequired,
+    deleteExperienceOrEducation: PropTypes.func.isRequired
 }
 
-export default EducationList;
+export default connect(null, { deleteExperienceOrEducation })(EducationList);
