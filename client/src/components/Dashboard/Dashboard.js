@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { getCurrentProfile} from "../../store/actions/profile";
 import Spinner from '../Layout/Spinner/Spinner';
 import DashboardLinks from "./DashboardLinks";
+import ExperienceList from "./ExperienceList";
+import EducationList from "./EducationList";
 
 const Dashboard = ( { getCurrentProfile, auth: { user }, profile: { profile, loading} }) => {
     const fullName = user ? `${user.first_name} ${user.last_name}` : ''
@@ -22,7 +24,13 @@ const Dashboard = ( { getCurrentProfile, auth: { user }, profile: { profile, loa
             </div>
         )
     }else{
-        content = <DashboardLinks />
+        content = (
+            <Fragment>
+                <DashboardLinks />
+                <ExperienceList experience={profile.experience}/>
+                <EducationList education={profile.education}/>
+            </Fragment>
+            )
     }
 
     return loading && profile === null ? (

@@ -7,13 +7,13 @@ import { updateEducation }  from '../../store/actions/profile';
 
 const UpdateEducation = ({updateEducation, history}) => {
     const [educationData, setEducationData] = useState({
-        school: null,
-        degree: null,
-        field_of_study: null,
-        from: null,
-        to: null,
+        school: '',
+        degree: '',
+        field_of_study: '',
+        from: '',
+        to: '',
         current: false,
-        description: null
+        description: ''
     });
 
     const {
