@@ -9,6 +9,7 @@ const Navbar = (props) => {
 
     const userLinks = (
         <ul>
+            <li><Link to="/profiles">Profiles</Link></li>
             <li>
                 <Link to="/dashboard">
                     <i className='fas fa-user'></i> {' '}
@@ -26,6 +27,7 @@ const Navbar = (props) => {
 
     const guessLinks = (
         <ul>
+            <li><Link to="/profiles">Profiles</Link></li>
             <li><Link to="/signup">Sign Up</Link></li>
             <li><Link to="/signin">Sign In</Link></li>
         </ul>

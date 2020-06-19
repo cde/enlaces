@@ -1,5 +1,13 @@
 import axios from 'axios';
-import {GET_PROFILE, PROFILE_ERROR, UPDATE_PROFILE, CLEAR_PROFILE, ACCOUNT_DELETED } from "./actionTypes";
+import { GET_PROFILE,
+    GET_PROFILES,
+    GET_REPOS,
+    PROFILE_ERROR,
+    UPDATE_PROFILE,
+    CLEAR_PROFILE,
+    ACCOUNT_DELETED
+} from "./actionTypes";
+
 import {setAlert} from "./alert";
 
 export const getCurrentProfile = () => async dispatch => {
@@ -11,9 +19,54 @@ export const getCurrentProfile = () => async dispatch => {
         })
     } catch(e){
         dispatch({
-            type: PROFILE_ERROR
-            // payload: { msg: e.response.data.msg, status: e.response.status}
+            type: PROFILE_ERROR,
+            payload: { msg: e.response.data.msg, status: e.response.status}
+        })
+    }
+};
 
+export const getProfiles = () => async dispatch => {
+    dispatch({type: CLEAR_PROFILE })
+    try {
+        const res = await axios.get('/api/profile');
+        dispatch({
+            type: GET_PROFILES,
+            payload: res.data
+        })
+    } catch(e){
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: { msg: e.response.data.msg, status: e.response.status}
+        })
+    }
+};
+
+export const getProfileByUserId = (user_id) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/profile/user/${user_id}`);
+        dispatch({
+            type: GET_PROFILE,
+            payload: res.data
+        })
+    } catch(e){
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: { msg: e.response.data.msg, status: e.response.status}
+        })
+    }
+};
+
+export const getGithubRepos = (user_name) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/profile/github/${user_name}`);
+        dispatch({
+            type: GET_REPOS,
+            payload: res.data
+        })
+    } catch(e){
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: { msg: e.response.data.msg, status: e.response.status}
         })
     }
 };
