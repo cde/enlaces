@@ -17,6 +17,12 @@ const Navbar = (props) => {
                 </Link>
             </li>
             <li>
+                <Link to="/posts">
+                    <i className='fas fa-user'></i> {' '}
+                    <span className='hide-sm'> Posts </span>
+                </Link>
+            </li>
+            <li>
                 <Link to='#!' onClick={signOut}>
                     <i className='fas fa-sign-out-alt'></i> {' '}
                     <span className='hide-sm'> Sign Out </span>

@@ -13,6 +13,7 @@ import UpdateExperience from "./components/Profile/UpdateExperience";
 import UpdateEducation from "./components/Profile/UpdateEducation";
 import Profiles from "./components/Profiles/Profiles";
 import Profile from "./components/Profile/Profile";
+import Posts from "./components/Posts/Posts";
 
 import setAuthToken from "./utils/setAuthToken";
 import { loadUser} from "./store/actions/auth";
@@ -49,6 +50,7 @@ const App = () => {
                             <PrivateRoute exact path='/edit-profile' component={EditProfile} />
                             <PrivateRoute exact path='/update-experience' component={UpdateExperience} />
                             <PrivateRoute exact path='/update-education' component={UpdateEducation} />
+                            <PrivateRoute exact path='/posts' component={Posts} />
                         </Switch>
                     </section>
                 </Fragment>

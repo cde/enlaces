@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import Moment from "react-moment";
 import moment from 'moment';
 import { deleteExperienceOrEducation } from '../../store/actions/profile';
@@ -19,13 +18,12 @@ const ExperienceList = ({ experience, deleteExperienceOrEducation  }) => {
                 )}
             </td>
             <td>
-
-                <Link
+                <button
                     className='btn btn-danger'
                     onClick={()=>deleteExperienceOrEducation(exp._id) }
                 >
                     <i className="far fa-trash-alt"></i>
-                </Link>
+                </button>
             </td>
         </tr>
 
@@ -50,7 +48,7 @@ const ExperienceList = ({ experience, deleteExperienceOrEducation  }) => {
 }
 ExperienceList.propTypes = {
     experience: PropTypes.array.isRequired,
-    deleteExperience: PropTypes.func.isRequired
+    deleteExperience: PropTypes.func
 }
 
 export default connect(null, { deleteExperienceOrEducation } )(ExperienceList);

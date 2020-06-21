@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Spinner from '../Layout/Spinner/Spinner';
-import { getProfileByUserId, getGithubRepos } from "../../store/actions/profile";
+import { getProfileByUserId } from "../../store/actions/profile";
 import About from "./About";
 import ProfileTop from "./ProfileTop";
 import Experience from "./Experience";

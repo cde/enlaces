@@ -113,7 +113,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// @route    GET api/profile/:user_id
+// @route    GET api/profile/user/:user_id
 // @desc     Get profile by userId
 // @access   Public
 router.get(
