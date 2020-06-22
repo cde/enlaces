@@ -9,7 +9,7 @@ const normalize = require('normalize-url');
 
 const User = require('../../models/User');
 
-// @route    POST api/users
+// @route    Post api/users
 // @desc     Signup user
 // @access   Public
 router.post(

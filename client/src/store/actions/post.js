@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import { DELETE_POST, GET_POSTS, ADD_POST, POST_ERROR, UPDATE_LIKES } from "./actionTypes";
+import { DELETE_POST, GET_POSTS, GET_POST, ADD_POST, POST_ERROR, UPDATE_LIKES } from "./actionTypes";
 
 
 export const getPosts = () => async dispatch => {
@@ -54,14 +54,14 @@ export const removeLikes = (postId) => async  dispatch => {
     }
 }
 
-export const addPost = formData => async dispatch => {
+export const addPost = postData => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
         }
     }
     try {
-        const res = await axios.post('/api/posts', formData, config);
+        const res = await axios.post('/api/posts', postData, config);
 
         dispatch({
             type: ADD_POST,
@@ -95,3 +95,20 @@ export const deletePost = id => async dispatch => {
         });
     }
 };
+
+export const getPost = (id) => async dispatch => {
+    try {
+        console.log('in action post')
+        const res = await axios.get(`/api/posts/${id}`);
+        dispatch({
+            type: GET_POST,
+            payload: res.data
+        })
+    } catch(e) {
+        console.error(e);
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: e.response.statusText, status: e.response.status}
+        })
+    }
+}

@@ -6,7 +6,7 @@ const auth = require('../../middleware/auth');
 const Post = require('../../models/Post');
 const User = require('../../models/User');
 
-// @route   POST api/posts
+// @route   Post api/posts
 // @desc    Create a post
 // @access  Private
 router.post('/',
@@ -158,7 +158,7 @@ router.put('/unlike/:id', auth, async (req, res) => {
     }
 });
 
-// @route    POST api/posts/comment/:post_id
+// @route    Post api/posts/comment/:post_id
 // @desc     Add comment to a post
 // @access   Private
 router.post('/comment/:post_id',
