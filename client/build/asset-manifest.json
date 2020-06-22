@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0b6b7295.chunk.css",
+    "main.js": "/static/js/main.647854ec.chunk.js",
+    "main.js.map": "/static/js/main.647854ec.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.8c40394c.js",
+    "runtime-main.js.map": "/static/js/runtime-main.8c40394c.js.map",
+    "static/js/2.758ca90c.chunk.js": "/static/js/2.758ca90c.chunk.js",
+    "static/js/2.758ca90c.chunk.js.map": "/static/js/2.758ca90c.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.a2ef98f81a83f0dd4a37d58b1ad111a7.js": "/precache-manifest.a2ef98f81a83f0dd4a37d58b1ad111a7.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.0b6b7295.chunk.css.map": "/static/css/main.0b6b7295.chunk.css.map",
+    "static/js/2.758ca90c.chunk.js.LICENSE.txt": "/static/js/2.758ca90c.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/static/media/achievement-agreement-arms.77ecf82a.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8c40394c.js",
+    "static/js/2.758ca90c.chunk.js",
+    "static/css/main.0b6b7295.chunk.css",
+    "static/js/main.647854ec.chunk.js"
+  ]
+}
