@@ -9,6 +9,7 @@
     "axios": "^0.19.2",
     "cra-template": "1.0.3",
     "moment": "^2.26.0",
+    "normalize-url": "^5.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-moment": "^0.9.7",
