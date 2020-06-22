@@ -21,21 +21,22 @@ router.post('/',
             }
 
             const user = await User.findById(req.user.id).select('-password');
-            const fullName = user.first_name + ' ' + user.last_name;
 
             const newPost = new Post({
                 text: req.body.text,
-                name: fullName,
+                name: user.first_name + ' ' + user.last_name,
                 avatar: user.avatar,
                 user: req.user.id
             });
             const post = await newPost.save();
+            console.log('post ', post);
             res.json(post);
         } catch (e) {
             console.error(e.message);
             res.status(500).send('Server Error');
         }
-});
+    }
+);
 
 // @route   GET api/posts
 // @desc    Get all posts

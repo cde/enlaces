@@ -16,7 +16,7 @@ const Profiles = ( { getProfiles, profile: { profiles, loading } }) => {
                 <p className='lead' >
                     <i className="fas fa-project-diagram">Browse an connect</i>
                 </p>
-                <div classNames='profiles'>
+                <div className='profiles'>
                     { profiles.length > 0 ? (
                         profiles.map(profile => (
                             <ProfileItem key={profile._id} profile={profile}/>
