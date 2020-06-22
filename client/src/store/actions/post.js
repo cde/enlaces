@@ -1,7 +1,14 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import { DELETE_POST, GET_POSTS, GET_POST, ADD_POST, POST_ERROR, UPDATE_LIKES } from "./actionTypes";
-
+import {
+    DELETE_POST,
+    GET_POSTS, GET_POST,
+    ADD_POST,
+    POST_ERROR,
+    UPDATE_LIKES,
+    ADD_COMMENT,
+    DELETE_COMMENT
+} from "./actionTypes";
 
 export const getPosts = () => async dispatch => {
     try {
@@ -69,10 +76,10 @@ export const addPost = postData => async dispatch => {
         });
 
         dispatch(setAlert('Post Created', 'success'));
-    } catch (err) {
+    } catch (e) {
         dispatch({
             type: POST_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            payload: { msg: e.response.statusText, status: e.response.status }
         });
     }
 };
@@ -112,3 +119,46 @@ export const getPost = (id) => async dispatch => {
         })
     }
 }
+
+export const addComment = (postId, commentData) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    try {
+        const res = await axios.post(`/api/posts/${postId}/comments/`, commentData, config);
+
+        dispatch({
+            type: ADD_COMMENT,
+            payload: res.data
+        });
+
+        dispatch(setAlert('Comment added', 'success'));
+    } catch (e) {
+        console.error(e);
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: e.response.statusText, status: e.response.status }
+        });
+    }
+};
+
+export const deleteComment = (postId, commentId) => async dispatch => {
+    try {
+        const res = await axios.delete(`/api/posts/${postId}/comments/${commentId}`);
+        console.log(res);
+        dispatch({
+            type: DELETE_COMMENT,
+            payload: commentId
+        });
+
+        dispatch(setAlert('Comment Deleted', 'success'));
+    } catch (e) {
+        console.error(e);
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: e.response.statusText, status: e.response.status }
+        });
+    }
+};

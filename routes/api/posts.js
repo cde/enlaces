@@ -158,10 +158,10 @@ router.put('/unlike/:id', auth, async (req, res) => {
     }
 });
 
-// @route    Post api/posts/comment/:post_id
+// @route    Post api/posts/:post_id/comments/
 // @desc     Add comment to a post
 // @access   Private
-router.post('/comment/:post_id',
+router.post('/:post_id/comments',
     [ auth,
         [ check('text', 'Text is required').not().isEmpty() ]
     ],
@@ -177,23 +177,24 @@ router.post('/comment/:post_id',
 
             const newComment = {
                 text: req.body.text,
-                name: user.name,
+                name: user.first_name + ' ' + user.last_name,
                 avatar: user.avatar,
                 user: req.user.id
             }
             post.comments.unshift(newComment);
             post.save()
-            res.json(post)
+            console.log(post)
+            res.json(post.comments)
         } catch (e) {
             console.error(e.message);
             res.status(500).send('Server error');
         }
 });
 
-// @route    DELETE api/posts/comment/:id/:comment_id
+// @route    DELETE api/posts/:id/comment/:comment_id
 // @desc     Delete comment
 // @access   Private
-router.delete('/:id/comment/:comment_id', auth, async (req, res) => {
+router.delete('/:id/comments/:comment_id', auth, async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
         const comment = post.comments.find(
